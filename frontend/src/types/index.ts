@@ -54,3 +54,11 @@ export interface SessionFormData {
   description: string;
   teacherId: number;
 }
+
+interface ImportMetaEnv {
+  DEV: boolean;
+}
+
+export interface ImportMetaWithEnv extends ImportMeta {
+  env: ImportMetaEnv
+}

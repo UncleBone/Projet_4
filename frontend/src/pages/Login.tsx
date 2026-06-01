@@ -4,12 +4,12 @@ import { authService } from '../services/auth.service';
 
 function Login() {
   const navigate = useNavigate();
-  const [email, setEmail] = useState<any>('');
-  const [password, setPassword] = useState<any>('');
-  const [error, setError] = useState<any>('');
-  const [loading, setLoading] = useState<any>(false);
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [error, setError] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
 
-  const handleSubmit = async (e: any): Promise<any> => {
+  const handleSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
     setError('');
     setLoading(true);
