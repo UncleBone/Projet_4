@@ -17,18 +17,21 @@ function Profile() {
   const uid = user !== null ? user.id : null;
 
   useEffect(() => {
+    let controller = new AbortController();
     if (user) {
-      fetchUserInfo();
+      fetchUserInfo(controller);
     }
+    // return () => controller.abort();
   }, []);
 
-  const fetchUserInfo = async (): Promise<void> => {
+  const fetchUserInfo = async (cont: AbortController): Promise<void> => {
     try {
       setLoading(true);
       const response = await api.get(`/user/${uid}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
+        signal: cont.signal
       });
       setUserInfo(response.data);
     } catch (err: unknown) {

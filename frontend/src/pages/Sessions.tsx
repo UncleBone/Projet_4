@@ -12,19 +12,22 @@ function Sessions() {
   const token = authService.getToken();
 
   useEffect(() => {
-    fetchSessions();
+    let controller = new AbortController();
+    fetchSessions(controller);
+    return () => controller.abort();
   }, []);
 
-  const fetchSessions = async (): Promise<void> => {
+  const fetchSessions = async (cont: AbortController | undefined): Promise<void> => {
     try {
       setLoading(true);
       const response = await api.get<Session[]>('/session', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
+        signal: cont ? cont.signal : undefined
       });
       setSessions(response.data);
-    } catch (err: any) {
+    } catch (err: unknown) {
       setError('Failed to load sessions');
       console.error(err);
     } finally {
@@ -43,7 +46,7 @@ function Sessions() {
           Authorization: `Bearer ${token}`,
         },
       });
-      fetchSessions();
+      fetchSessions(undefined);
     } catch (err: any) {
       alert('Failed to delete session');
       console.error(err);
