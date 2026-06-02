@@ -14,7 +14,7 @@ function Sessions() {
   useEffect(() => {
     let controller = new AbortController();
     fetchSessions(controller);
-    return () => controller.abort();
+    // return () => controller.abort();
   }, []);
 
   const fetchSessions = async (cont: AbortController | undefined): Promise<void> => {
