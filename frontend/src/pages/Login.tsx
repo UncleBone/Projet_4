@@ -9,6 +9,7 @@ function Login() {
   const [error, setError] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
 
+  // const handleSubmit = async (e: SubmitEvent): Promise<void> => {
   const handleSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
     setError('');
