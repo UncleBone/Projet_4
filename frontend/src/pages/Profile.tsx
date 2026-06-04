@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import { authService } from '../services/auth.service';
 import { ImportMetaWithEnv, User } from '../types';
+import axios from 'axios';
 
 function Profile() {
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ function Profile() {
     if (user) {
       fetchUserInfo(controller);
     }
-    // return () => controller.abort();
+    return () => controller.abort();
   }, []);
 
   const fetchUserInfo = async (cont: AbortController): Promise<void> => {
@@ -35,6 +36,9 @@ function Profile() {
       });
       setUserInfo(response.data);
     } catch (err: unknown) {
+      if(axios.isCancel(err)){
+        return
+      }
       setError('Failed to load user information');
       console.error(err);
     } finally {

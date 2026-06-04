@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import { authService } from '../services/auth.service';
 import { Session } from '../types';
+import axios from 'axios';
 
 function SessionDetail() {
   const { id } = useParams();
@@ -14,19 +15,25 @@ function SessionDetail() {
   const token = authService.getToken();
 
   useEffect(() => {
-    fetchSession();
+    const controller = new AbortController();
+    fetchSession(controller.signal);
+    return () => controller.abort();
   }, [id]);
 
-  const fetchSession = async (): Promise<void> => {
+  const fetchSession = async (signal: AbortSignal | undefined): Promise<void> => {
     try {
       setLoading(true);
       const response = await api.get<Session>(`/session/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
+        signal
       });
       setSession(response.data);
     } catch (err: unknown) {
+      if(axios.isCancel(err)){
+        return
+      }
       setError('Failed to load session details');
       console.error(err);
     } finally {
@@ -46,7 +53,7 @@ function SessionDetail() {
           },
         }
       );
-      fetchSession();
+      fetchSession(undefined);
     } catch (err: unknown) {
       alert('Failed to join session');
       console.error(err);
@@ -61,7 +68,7 @@ function SessionDetail() {
           Authorization: `Bearer ${token}`,
         },
       });
-      fetchSession();
+      fetchSession(undefined);
     } catch (err: unknown) {
       alert('Failed to leave session');
       console.error(err);

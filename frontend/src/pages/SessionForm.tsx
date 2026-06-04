@@ -4,6 +4,7 @@ import api from '../services/api';
 import { authService } from '../services/auth.service';
 import { Teacher, Session, SessionFormData } from '../types';
 import { SubmitEvent } from 'react';
+import axios from 'axios';
 
 function SessionForm() {
   const navigate = useNavigate();
@@ -30,31 +31,38 @@ function SessionForm() {
   }, [user, navigate]);
 
   useEffect(() => {
-    fetchTeachers();
+    const controller = new AbortController();
+    fetchTeachers(controller.signal);
     if (isEditMode) {
-      fetchSession();
+      fetchSession(controller.signal);
     }
+    return () => controller.abort();
   }, [id]);
 
-  const fetchTeachers = async (): Promise<void> => {
+  const fetchTeachers = async (signal: AbortSignal): Promise<void> => {
     try {
       const response = await api.get<Teacher[]>('/teacher', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
+        signal
       });
       setTeachers(response.data);
     } catch (err) {
+      if(axios.isCancel(err)){
+        return
+      }
       console.error('Failed to fetch teachers', err);
     }
   };
 
-  const fetchSession = async (): Promise<void> => {
+  const fetchSession = async (signal: AbortSignal): Promise<void> => {
     try {
       const response = await api.get<Session>(`/session/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
+        signal
       });
       const session = response.data;
       setFormData({
@@ -64,6 +72,9 @@ function SessionForm() {
         teacherId: session.teacher.id,
       });
     } catch (err) {
+      if(axios.isCancel(err)){
+        return
+      }
       setError('Failed to load session');
       console.error(err);
     }

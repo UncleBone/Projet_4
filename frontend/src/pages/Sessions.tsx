@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import api from '../services/api';
 import { authService } from '../services/auth.service';
 import { Session } from '../types';
+import axios from 'axios';
 
 function Sessions() {
   const [sessions, setSessions] = useState<Array<Session>>([]);
@@ -12,22 +13,25 @@ function Sessions() {
   const token = authService.getToken();
 
   useEffect(() => {
-    let controller = new AbortController();
-    fetchSessions(controller);
-    // return () => controller.abort();
+    const controller = new AbortController();
+    fetchSessions(controller.signal);
+    return () => controller.abort();
   }, []);
 
-  const fetchSessions = async (cont: AbortController | undefined): Promise<void> => {
+  const fetchSessions = async (signal: AbortSignal | undefined): Promise<void> => {
     try {
       setLoading(true);
       const response = await api.get<Session[]>('/session', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-        signal: cont ? cont.signal : undefined
+        signal: signal ? signal : undefined
       });
       setSessions(response.data);
     } catch (err: unknown) {
+      if(axios.isCancel(err)){
+        return
+      }
       setError('Failed to load sessions');
       console.error(err);
     } finally {
