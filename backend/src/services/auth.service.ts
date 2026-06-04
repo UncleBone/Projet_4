@@ -2,11 +2,11 @@ import { Response } from 'express';
 import { generateToken } from '../utils/jwt.util';
 import * as bcrypt from 'bcrypt';
 import { LoginDto, RegisterDto } from '../dto/auth.dto';
-import { AuthRepo } from '../repository/auth.repo';
+import { UserRepo } from '../repository/user.repo';
 
 
 export class AuthService {
-    private authRepo = new AuthRepo;
+    private userRepo = new UserRepo;
 
     async login(body: LoginDto, res: Response) {
         const { email, password } = body;
@@ -24,7 +24,7 @@ export class AuthService {
             return res.status(400).json({ message: 'Password must be a string' });
             }
     
-            const user = await this.authRepo.findUser(email);
+            const user = await this.userRepo.findUser(email);
     
             if (!user) {
             return res.status(401).json({ message: 'Invalid credentials' });
@@ -74,7 +74,7 @@ export class AuthService {
                 return res.status(400).json({ message: 'Password must be at least 8 characters' });
             }
 
-            const existingUser = await this.authRepo.findUser(email);
+            const existingUser = await this.userRepo.findUser(email);
 
             if (existingUser) {
                 return res.status(400).json({ message: 'Email already exists' });
@@ -82,7 +82,7 @@ export class AuthService {
 
             const hashedPassword = await bcrypt.hash(password, 10);
 
-            const user = await this.authRepo.createUser({
+            const user = await this.userRepo.createUser({
                 email,
                 password: hashedPassword,
                 firstName,
