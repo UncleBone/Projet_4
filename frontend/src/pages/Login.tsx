@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { authService } from '../services/auth.service';
+import { SubmitEvent } from 'react';
 
 function Login() {
   const navigate = useNavigate();
@@ -9,8 +10,7 @@ function Login() {
   const [error, setError] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
 
-  // const handleSubmit = async (e: SubmitEvent): Promise<void> => {
-  const handleSubmit = async (e: React.FormEvent): Promise<void> => {
+  const handleSubmit = async (e: SubmitEvent): Promise<void> => {
     e.preventDefault();
     setError('');
     setLoading(true);

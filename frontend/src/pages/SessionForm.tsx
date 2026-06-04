@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import api from '../services/api';
 import { authService } from '../services/auth.service';
 import { Teacher, Session, SessionFormData } from '../types';
+import { SubmitEvent } from 'react';
 
 function SessionForm() {
   const navigate = useNavigate();
@@ -77,8 +78,7 @@ function SessionForm() {
     });
   };
 
-  // const handleSubmit = async (e: SubmitEvent): Promise<void> => {
-  const handleSubmit = async (e: React.FormEvent): Promise<void> => {
+  const handleSubmit = async (e: SubmitEvent): Promise<void> => {
     e.preventDefault();
     setError('');
     setLoading(true);

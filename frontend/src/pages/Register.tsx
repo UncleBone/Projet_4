@@ -2,6 +2,7 @@ import { ChangeEvent, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { authService } from '../services/auth.service';
 import { RegisterData } from '../types';
+import { SubmitEvent } from 'react';
 
 function Register() {
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ function Register() {
     });
   };
 
-  const handleSubmit = async (e: React.FormEvent): Promise<void> => {
+  const handleSubmit = async (e: SubmitEvent): Promise<void> => {
     e.preventDefault();
     setError('');
     setLoading(true);
