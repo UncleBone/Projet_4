@@ -22,6 +22,7 @@
     "docker": "^1.0.0",
     "dotenv": "^17.2.3",
     "express": "^4.22.1",
+    "express-async-handler": "^1.2.0",
     "jsonwebtoken": "^9.0.3",
     "zod": "^4.3.6"
   },
