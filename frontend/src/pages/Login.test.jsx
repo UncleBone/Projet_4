@@ -4,13 +4,13 @@ import { MemoryRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event'
 import { authService } from '../services/auth.service.ts';
 
-const mockedUseNavigate = vi.fn((path) => path);
+const mockUseNavigate = vi.fn((path) => path);
 vi.mock("react-router-dom", async (importOriginal) => {
   const actual = await importOriginal()
 
   return {
     ...actual,
-    useNavigate: () => mockedUseNavigate,
+    useNavigate: () => mockUseNavigate,
   };
 });
 
@@ -55,7 +55,7 @@ describe('Login', () => {
     await user.type(passwordInput, '12345')
     await user.click(submitButton)
 
-    expect(mockedUseNavigate).toHaveBeenCalledWith('/sessions')
+    expect(mockUseNavigate).toHaveBeenCalledWith('/sessions')
   })
 
 })
