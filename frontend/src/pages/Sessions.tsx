@@ -33,7 +33,6 @@ function Sessions() {
         return
       }
       setError('Failed to load sessions');
-      console.error(err);
     } finally {
       setLoading(false);
     }
@@ -53,7 +52,6 @@ function Sessions() {
       fetchSessions(undefined);
     } catch (err: any) {
       alert('Failed to delete session');
-      console.error(err);
     }
   };
 
