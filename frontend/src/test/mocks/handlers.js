@@ -5,6 +5,9 @@ const sessions = [
     { id: 2, name: "Session 2", date: new Date(), description: "Description 2", users: [1,2], teacher :{ firstName: "Jean", lastName: "Martin" }},
 ];
 
+export const postParticipationHandler = vi.fn();
+export const deleteParticipationHandler = vi.fn();
+
 export const handlers = [
     // Simuler GET /api/users/:id
     http.get( // 1 - Définition de la méthode HTTP
@@ -20,6 +23,26 @@ export const handlers = [
         ({ params }) => { 
             const { id } = params 
             
-            return HttpResponse.json(sessions[id])
+            return HttpResponse.json(sessions[0])
+        }),
+    
+    http.post( 
+        '/api/session/:id/participate/:uid', 
+        ({ params }) => { 
+            const { id, uid } = params 
+
+            postParticipationHandler({ id, uid });
+
+            return HttpResponse({ status: 200 })
+        }),
+
+    http.delete( 
+        '/api/session/:id/participate/:uid', 
+        ({ params }) => { 
+            const { id, uid } = params 
+
+            deleteParticipationHandler({ id, uid });
+
+            return HttpResponse({ status: 200 })
         }),
 ]

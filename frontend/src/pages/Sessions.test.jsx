@@ -65,7 +65,7 @@ describe('Sessions', () => {
     expect(screen.getByText('Create Session')).toBeInTheDocument()
   })
 
-  it('should delete session if user click delete button', async () => {
+  it('should trigger handleDelete if user click delete button', async () => {
     const user = userEvent.setup()
     authService.getCurrentUser = () => ({ admin: true })
     window.confirm = vi.fn()

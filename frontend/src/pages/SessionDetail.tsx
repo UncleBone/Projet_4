@@ -35,7 +35,6 @@ function SessionDetail() {
         return
       }
       setError('Failed to load session details');
-      console.error(err);
     } finally {
       setLoading(false);
     }
@@ -56,7 +55,6 @@ function SessionDetail() {
       fetchSession(undefined);
     } catch (err: unknown) {
       alert('Failed to join session');
-      console.error(err);
     }
   };
 
@@ -71,7 +69,6 @@ function SessionDetail() {
       fetchSession(undefined);
     } catch (err: unknown) {
       alert('Failed to leave session');
-      console.error(err);
     }
   };
 
@@ -89,7 +86,6 @@ function SessionDetail() {
       navigate('/sessions');
     } catch (err: unknown) {
       alert('Failed to delete session');
-      console.error(err);
     }
   };
 
