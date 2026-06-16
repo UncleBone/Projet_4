@@ -52,7 +52,7 @@ function SessionForm() {
       if(axios.isCancel(err)){
         return
       }
-      console.error('Failed to fetch teachers', err);
+      setError('Failed to fetch teachers');
     }
   };
 
@@ -93,7 +93,6 @@ function SessionForm() {
     e.preventDefault();
     setError('');
     setLoading(true);
-
     try {
       if (isEditMode) {
         await api.put(`/session/${id}`, formData, {
@@ -132,10 +131,11 @@ function SessionForm() {
 
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2">
+              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor='session_name_input'>
                 Session Name
               </label>
               <input
+                id='session_name_input'
                 type="text"
                 name="name"
                 value={formData.name}
@@ -146,10 +146,11 @@ function SessionForm() {
             </div>
 
             <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2">
+              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor='date_input'>
                 Date
               </label>
               <input
+                id='date_input'
                 type="date"
                 name="date"
                 value={formData.date}
@@ -160,10 +161,11 @@ function SessionForm() {
             </div>
 
             <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2">
+              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor='teacher_select'>
                 Teacher
               </label>
               <select
+                id="teacher_select"
                 name="teacherId"
                 value={formData.teacherId}
                 onChange={handleChange}
@@ -180,10 +182,11 @@ function SessionForm() {
             </div>
 
             <div className="mb-6">
-              <label className="block text-gray-700 text-sm font-bold mb-2">
+              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor='description_input'>
                 Description
               </label>
               <textarea
+                id="description_input"
                 name="description"
                 value={formData.description}
                 onChange={handleChange}
