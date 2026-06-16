@@ -9,6 +9,8 @@ export const postParticipationHandler = vi.fn();
 export const deleteParticipationHandler = vi.fn();
 export const postSessionHandler = vi.fn();
 export const editSessionHandler = vi.fn();
+export const deleteUserHandler = vi.fn();
+export const promoteAdminHandler = vi.fn();
 
 export const handlers = [
     // Simuler GET /api/users/:id
@@ -80,5 +82,37 @@ export const handlers = [
             editSessionHandler(id,data);
 
             return HttpResponse({ status: 201 })
+        }),
+
+    http.get( 
+        '/api/user/:id', 
+        ({ params }) => { 
+            const { id } = params 
+            
+            return HttpResponse.json({ 
+                firstName: "Bob", 
+                lastName: "Sponge",
+                email: "email@email.com",
+                createdAt: new Date()
+            })
+        }),
+
+    http.delete( 
+        '/api/user/:id', 
+        ({ params }) => { 
+            const { id } = params 
+
+            deleteUserHandler(id)
+            
+            return HttpResponse({ status: 200 })
+        }),
+
+    http.post( 
+        '/api/user/promote-admin', 
+        () => { 
+
+            promoteAdminHandler()
+            
+            return HttpResponse({ status: 200 })
         }),
 ]

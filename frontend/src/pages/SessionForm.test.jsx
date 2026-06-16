@@ -17,8 +17,6 @@ vi.mock("react-router-dom", () => {
   };
 });
 
-
-
 describe('SessionForm', () => {
     let mockedUseParams;
 

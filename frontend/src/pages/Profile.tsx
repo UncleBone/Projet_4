@@ -40,7 +40,6 @@ function Profile() {
         return
       }
       setError('Failed to load user information');
-      console.error(err);
     } finally {
       setLoading(false);
     }
@@ -61,7 +60,6 @@ function Profile() {
       navigate('/login');
     } catch (err: unknown) {
       alert('Failed to delete account');
-      console.error(err);
     }
   };
 
