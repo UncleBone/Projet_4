@@ -126,4 +126,24 @@ export const handlers = [
             
             return HttpResponse({ status: 200 })
         }),
+
+    http.post( 
+        '/api/auth/login', 
+        async ({ request }) => { 
+            const data = await request.json();
+            const token = "test_token"
+
+            return HttpResponse.json({...data,token})
+        }
+    ),
+
+    http.post( 
+        '/api/auth/register', 
+        async ({ request }) => { 
+            const data = await request.json();
+            const token = "test_token"
+
+            return HttpResponse.json({...data,token})
+        }
+    ),
 ]
