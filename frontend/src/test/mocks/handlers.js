@@ -9,6 +9,7 @@ export const postParticipationHandler = vi.fn();
 export const deleteParticipationHandler = vi.fn();
 export const postSessionHandler = vi.fn();
 export const editSessionHandler = vi.fn();
+export const deleteSessionHandler = vi.fn();
 export const deleteUserHandler = vi.fn();
 export const promoteAdminHandler = vi.fn();
 
@@ -28,6 +29,16 @@ export const handlers = [
             const { id } = params 
             
             return HttpResponse.json(sessions[0])
+        }),
+
+    http.delete( 
+        '/api/session/:id', 
+        ({ params }) => { 
+            const { id } = params 
+
+            deleteSessionHandler(id)
+            
+            return HttpResponse({ status: 200 })
         }),
     
     http.post( 

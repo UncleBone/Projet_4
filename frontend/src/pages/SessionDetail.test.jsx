@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event'
 import { authService } from '../services/auth.service.ts';
 import { http, HttpResponse } from 'msw'
 import { server } from '../test/mocks/server'
-import { postParticipationHandler, deleteParticipationHandler } from '../test/mocks/handlers.js';
+import { postParticipationHandler, deleteParticipationHandler, deleteSessionHandler, handlers } from '../test/mocks/handlers.js';
 
 const mockUseNavigate = vi.fn((path) => path);
 vi.mock("react-router-dom", async (importOriginal) => {
@@ -68,7 +68,7 @@ describe('Sessions', () => {
         expect(postParticipationHandler).toHaveBeenCalledWith({ id: "1", uid: "1" })
     });
 
-    it('should display leave session button user has joined', async () => {
+    it('should display leave session button if user has joined', async () => {
         authService.getCurrentUser = () => ({ id: 1, admin: false })
         server.use(
         http.get('/api/session/:id', ({ params }) => {
@@ -91,7 +91,7 @@ describe('Sessions', () => {
         authService.getCurrentUser = () => ({ id: 1, admin: false })
         const user = userEvent.setup()
         server.use(
-        http.get('/api/session/:id', ({ params }) => {
+          http.get('/api/session/:id', ({ params }) => {
             const { id } = params 
             return HttpResponse.json(
                 { id: 1, name: "Session 1", date: new Date(), description: "Description 1", users: [1], teacher :{ firstName: "John", lastName: "Doe" }})
@@ -111,10 +111,10 @@ describe('Sessions', () => {
         expect(deleteParticipationHandler).toHaveBeenCalledWith({ id: "1", uid: "1" })
     })
 
-    it('should trigger handleDelete if user click delete button', async () => {
+    it('should call delete if user click delete button', async () => {
         const user = userEvent.setup()
         authService.getCurrentUser = () => ({ admin: true })
-        window.confirm = vi.fn()
+        window.confirm = () => true
 
         render(<SessionDetail />)
         
@@ -126,24 +126,39 @@ describe('Sessions', () => {
 
         await user.click(deleteButton)
 
-        expect(window.confirm).toHaveBeenCalledWith('Are you sure you want to delete this session?')
+        await waitFor(() => {
+          expect(deleteSessionHandler).toHaveBeenCalledWith("1")
+        })
     })
 
-    
+    it('should display error if fetch fails', async () => {
+      server.use(
+        http.get('/api/session/:id', () => {
+          return new HttpResponse(null, { status: 404 })
+        })
+      )
 
-  it('should display error if fetch fails', async () => {
-    server.use(
-      http.get('/api/session/:id', () => {
-        return new HttpResponse(null, { status: 404 })
+      render(<SessionDetail />)
+      
+      await waitFor(() => {
+        expect(screen.queryByText('Loading session...')).not.toBeInTheDocument()
       })
-    )
+    
+    expect(screen.getByText('Failed to load session details')).toBeInTheDocument()
+  })
+
+  it('should redirect to sessions when user clicks cancel button', async () => {
+    server.use(...handlers)
+    const user = userEvent.setup()
 
     render(<SessionDetail />)
-    
+
     await waitFor(() => {
       expect(screen.queryByText('Loading session...')).not.toBeInTheDocument()
     })
-    
-    expect(screen.getByText('Failed to load session details')).toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: "Back to Sessions"}))
+
+    expect(mockUseNavigate).toHaveBeenCalledWith('/sessions')
   })
 })
