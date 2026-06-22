@@ -108,7 +108,7 @@ function Profile() {
     <div className="min-h-screen bg-gray-100 py-8">
       <div className="container mx-auto px-4 max-w-2xl">
         <div className="bg-white rounded-lg shadow-md p-8">
-          <h1 className="text-3xl font-bold text-gray-800 mb-8">My Profile</h1>
+          <h1 className="text-3xl font-bold text-gray-800 mb-8" data-cy="title">My Profile</h1>
 
           <div className="space-y-4 mb-8">
             <div className="border-b pb-4">
@@ -136,7 +136,7 @@ function Profile() {
               <label className="block text-gray-600 text-sm font-semibold mb-1">
                 Account Type
               </label>
-              <p className="text-lg text-gray-800">
+              <p className="text-lg text-gray-800" data-cy="account-type">
                 {userInfo.admin ? (
                   <span className="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-semibold">
                     Administrator
@@ -153,6 +153,7 @@ function Profile() {
                     onClick={handlePromoteAdmin}
                     disabled={promoteLoading}
                     className="bg-emerald-600 text-white py-2 px-4 rounded-lg hover:bg-emerald-700 disabled:opacity-60"
+                    data-cy="promote"
                   >
                     {promoteLoading ? 'Promoting...' : 'Promote to Admin (Dev)'}
                   </button>
@@ -180,12 +181,14 @@ function Profile() {
 
           <div className="flex space-x-4">
             <button
+              data-cy="back"
               onClick={() => navigate('/sessions')}
               className="flex-1 bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700"
             >
               Back to Sessions
             </button>
             <button
+              data-cy="delete"
               onClick={handleDeleteAccount}
               className="bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700"
             >

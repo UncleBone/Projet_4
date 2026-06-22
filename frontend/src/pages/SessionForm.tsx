@@ -119,7 +119,7 @@ function SessionForm() {
     <div className="min-h-screen bg-gray-100 py-8">
       <div className="container mx-auto px-4 max-w-2xl">
         <div className="bg-white rounded-lg shadow-md p-8">
-          <h1 className="text-3xl font-bold text-gray-800 mb-8">
+          <h1 className="text-3xl font-bold text-gray-800 mb-8" data-cy="title">
             {isEditMode ? 'Edit Session' : 'Create New Session'}
           </h1>
 
@@ -135,6 +135,7 @@ function SessionForm() {
                 Session Name
               </label>
               <input
+                data-cy="name"
                 id='session_name_input'
                 type="text"
                 name="name"
@@ -150,6 +151,7 @@ function SessionForm() {
                 Date
               </label>
               <input
+                data-cy="date"
                 id='date_input'
                 type="date"
                 name="date"
@@ -165,6 +167,7 @@ function SessionForm() {
                 Teacher
               </label>
               <select
+                data-cy="teacher"
                 id="teacher_select"
                 name="teacherId"
                 value={formData.teacherId}
@@ -186,6 +189,7 @@ function SessionForm() {
                 Description
               </label>
               <textarea
+                data-cy="description"
                 id="description_input"
                 name="description"
                 value={formData.description}
@@ -198,6 +202,7 @@ function SessionForm() {
 
             <div className="flex space-x-4">
               <button
+                data-cy="submit"
                 type="submit"
                 disabled={loading}
                 className="flex-1 bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700 disabled:bg-gray-400"

@@ -114,7 +114,7 @@ function SessionDetail() {
     <div className="min-h-screen bg-gray-100 py-8">
       <div className="container mx-auto px-4 max-w-3xl">
         <div className="bg-white rounded-lg shadow-md p-8">
-          <h1 className="text-3xl font-bold text-gray-800 mb-6">
+          <h1 className="text-3xl font-bold text-gray-800 mb-6" data-cy="name">
             {session.name}
           </h1>
 
@@ -134,7 +134,7 @@ function SessionDetail() {
                 <strong>Teacher:</strong> {session.teacher.firstName}{' '}
                 {session.teacher.lastName}
               </p>
-              <p>
+              <p data-cy="participants">
                 <strong>Participants:</strong> {session.users.length}
               </p>
             </div>
@@ -144,7 +144,7 @@ function SessionDetail() {
             <h2 className="text-xl font-semibold text-gray-700 mb-2">
               Description
             </h2>
-            <p className="text-gray-600 whitespace-pre-wrap">
+            <p className="text-gray-600 whitespace-pre-wrap" data-cy="description">
               {session.description}
             </p>
           </div>
@@ -155,6 +155,7 @@ function SessionDetail() {
                 <button
                   onClick={() => navigate(`/sessions/edit/${id}`)}
                   className="bg-indigo-600 text-white px-6 py-2 rounded hover:bg-indigo-700"
+                  data-cy="edit"
                 >
                   Edit
                 </button>
@@ -171,6 +172,7 @@ function SessionDetail() {
                   <button
                     onClick={handleUnparticipate}
                     className="bg-red-600 text-white px-6 py-2 rounded hover:bg-red-700"
+                    data-cy="leave"
                   >
                     Leave Session
                   </button>
@@ -178,6 +180,7 @@ function SessionDetail() {
                   <button
                     onClick={handleParticipate}
                     className="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700"
+                    data-cy="join"
                   >
                     Join Session
                   </button>

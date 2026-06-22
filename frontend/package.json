@@ -20,6 +20,8 @@
     "vue-router": "^5.1.0"
   },
   "devDependencies": {
+    "@cypress/code-coverage": "^4.0.3",
+    "@faker-js/faker": "^10.5.0",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",
@@ -29,11 +31,16 @@
     "@vitest/coverage-v8": "^4.1.8",
     "@vitest/ui": "^4.1.8",
     "@vue/test-utils": "^2.4.11",
+    "babel-plugin-istanbul": "^8.0.0",
+    "c8": "^11.0.0",
+    "cypress": "^15.17.0",
     "jsdom": "^29.1.1",
     "msw": "^2.14.6",
+    "nyc": "^18.0.0",
     "tailwindcss": "^4.1.18",
     "typescript": "^5.9.3",
     "vite": "^7.3.1",
+    "vite-plugin-istanbul": "^9.0.1",
     "vitest": "^4.1.8"
   }
 }

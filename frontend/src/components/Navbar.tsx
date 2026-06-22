@@ -30,12 +30,13 @@ function Navbar() {
                     Create Session
                   </Link>
                 ) : null}
-                <Link to="/profile" className="hover:text-indigo-200">
+                <Link to="/profile" className="hover:text-indigo-200" data-cy="profile">
                   Profile
                 </Link>
                 <button
                   onClick={handleLogout}
                   className="bg-indigo-700 hover:bg-indigo-800 px-4 py-2 rounded"
+                  data-cy="logout"
                 >
                   Logout
                 </button>
