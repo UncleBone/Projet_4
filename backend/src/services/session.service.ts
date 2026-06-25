@@ -236,8 +236,7 @@ export class SessionService {
       if (!session) {
         throw({ status: 404, message: 'Session not found' });
       }
-
-      const user = this.userRepo.getUserById(participantUserId);
+      const user = await this.userRepo.getUserById(participantUserId);
 
       if (!user) {
         throw({ status: 404, message: 'User not found' });

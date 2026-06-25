@@ -20,9 +20,9 @@ export class UserRepo {
     }
 
     async createUser(data: CreateUserDto) {
-            const user = await prisma.user.create({ data });
-            return user
-        }
+        const user = await prisma.user.create({ data });
+        return user
+    }
 
     async delete(userId: number) {
         await prisma.user.delete({

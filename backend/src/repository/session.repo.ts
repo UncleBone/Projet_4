@@ -99,7 +99,7 @@ export class SessionRepo {
     async deleteSessionParticipation(sessionId: number, userId: number) {
         await prisma.sessionParticipation.delete({
             where: {
-                sessionId_userId: {
+              sessionId_userId: {
                 sessionId,
                 userId,
                 },
