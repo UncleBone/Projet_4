@@ -59,7 +59,7 @@ A full-stack web application for managing yoga studio operations, including sess
 ### 1. Clone the repository
 
 ```bash
-cd p4-dfsjs-starter
+git clone https://github.com/UncleBone/Projet_4.git
 ```
 
 ### 2. Install Backend Dependencies
@@ -279,12 +279,31 @@ p4-dfsjs-starter/
 
 ## Testing
 
-The project supports comprehensive testing with the following frameworks:
-- **Unit tests**: For testing individual components and utilities
-- **Integration tests**: For testing API endpoints
-- **End-to-end tests**: For testing critical user flows
-
-Run tests with the appropriate npm scripts in each directory.
+- **Front-end unit and integration tests** :
+	- run the tests and generate coverage report: 
+```bash
+cd frontend
+npm run test:coverage
+```
+- **Front-end E2E tests**: 
+	* run the tests :
+```bash
+npx cypress run
+```
+	- generate coverage text report :
+```bash
+npx nyc report --reporter=text
+```
+	- generate coverage html report :
+```bash
+npx nyc report --reporter=lcov
+```
+- **Back-end unit and integration tests** : 
+	- run the tests and generate coverage report: 
+```bash
+cd frontend
+npm run test:coverage
+```
 
 ## Troubleshooting
 
