@@ -7,7 +7,7 @@ import { errorHandler } from './middleware/error.middleware';
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 8080;
+// const PORT = process.env.PORT || 8080;
 
 // Middleware
 app.use(cors());
@@ -24,9 +24,9 @@ app.get('/api/health', (req, res) => {
 });
 
 // Start server
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-  console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
-});
+// app.listen(PORT, () => {
+//   console.log(`Server is running on port ${PORT}`);
+//   console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+// });
 
 export default app;
